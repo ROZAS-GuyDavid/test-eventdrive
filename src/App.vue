@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <!-- <img src="./assets/logo.png"> -->
     <h1>Eventdrive</h1>
     <Events/>
   </div>
