@@ -7,7 +7,8 @@ const state = {
   accessToken: localStorage.getItem('access_token') ? localStorage.getItem('access_token') : '' || null,
   refreshToken: '' || null,
   eventList: [] || null,
-  showCreateEvent: false
+  showCreateEvent: false,
+  showUpdateEvent: false
 }
 
 const mutations = {
@@ -28,11 +29,23 @@ const mutations = {
   },
   // Montrer le formulaire d'ajout d'évenement
   showCreateEvent: (state) => {
+    state.showUpdateEvent = false
     state.showCreateEvent = true
   },
   // Cacher le formulaire d'ajout d'évenement
   hideCreateEvent: (state) => {
+    state.showUpdateEvent = false
     state.showCreateEvent = false
+  },
+  // Montrer le formulaire d'update d'évenement
+  showUpdateEvent: (state) => {
+    state.showCreateEvent = false
+    state.showUpdateEvent = true
+  },
+  // Cacher le formulaire d'update d'évenement
+  hideUpdateEvent: (state) => {
+    state.showCreateEvent = false
+    state.showUpdateEvent = false
   }
 }
 
@@ -83,6 +96,11 @@ const actions = {
     })
   },
   createEvent: ({commit}, requestFields) => {
+    // TODO faire une requette create
+    console.log(requestFields)
+  },
+  updateEvent: ({commit}, requestFields) => {
+    // TODO faire une requette update
     console.log(requestFields)
   },
 
@@ -125,7 +143,8 @@ const getters = {
   // Je défini les getters que je vais pouvoir déclancher notament depuis ma vue Events
   loggedIn: state => state.accessToken != null,
   hasEvents: state => state.eventList != null,
-  createShowed: state => state.showCreateEvent !== false
+  createShowed: state => state.showCreateEvent !== false,
+  updateShowed: tate => state.showUpdateEvent !== false
 }
 
 let store = new Vuex.Store({
