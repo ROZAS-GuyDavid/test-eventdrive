@@ -2,16 +2,19 @@
   <div id="app">
     <h1>Eventdrive</h1>
     <Events/>
+    <EventList/>
   </div>
 </template>
 
 <script>
 import Events from './components/Events'
+import EventList from './components/EventList'
 
 export default {
   name: 'App',
   components: {
-    Events
+    Events,
+    EventList
   }
 }
 </script>
