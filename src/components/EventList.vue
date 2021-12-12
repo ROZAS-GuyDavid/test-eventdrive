@@ -25,7 +25,8 @@
                     <div class="d-grid gap-2 d-md-flex justify-content-md-center">
                         <!-- TODO passer la clée à showUpdateEvent -->
                         <button @click.prevent="showUpdateEvent(1)" class="btn btn-primary" type="button"><i class="bi bi-pen"></i></button>
-                        <button class="btn btn-primary" type="button"><i class="bi bi-trash"></i></button>
+                        <!-- TODO passer la clée à removeEvent -->
+                        <button @click.prevent="removeEvent(1)" class="btn btn-primary" type="button"><i class="bi bi-trash"></i></button>
                     </div>
                 </td>
             </tr>
@@ -41,7 +42,7 @@
                 <td>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-center">
                         <button @click.prevent="showUpdateEvent(1)" class="btn btn-primary" type="button"><i class="bi bi-pen"></i></button>
-                        <button class="btn btn-primary" type="button"><i class="bi bi-trash"></i></button>
+                        <button @click.prevent="removeEvent(1)" class="btn btn-primary" type="button"><i class="bi bi-trash"></i></button>
                     </div>
                 </td>
             </tr>
@@ -53,7 +54,7 @@
                 <td>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-center">
                         <button @click.prevent="showUpdateEvent(2)" class="btn btn-primary" type="button"><i class="bi bi-pen"></i></button>
-                        <button class="btn btn-primary" type="button"><i class="bi bi-trash"></i></button>
+                        <button @click.prevent="removeEvent(2)" class="btn btn-primary" type="button"><i class="bi bi-trash"></i></button>
                     </div>
                 </td>
             </tr>
@@ -85,7 +86,7 @@ export default {
 
   mounted () {
     // TODO à décomenter ne fois que l'api dev sera à nouveau utilisable
-    // store.dispatch('eventCached')
+    // store.dispatch('eventOrCached')
   },
 
   computed: {
@@ -100,9 +101,15 @@ export default {
 
   methods: {
     // je récupère mes actions depuis mon EventsStore
-    ...Vuex.mapActions([
-      'eventCached'
-    ]),
+    ...Vuex.mapActions({
+      getEventsStore: 'eventOrCached',
+      removeEventStore: 'removeEvent'
+    }),
+
+    removeEvent: function (selectedId) {
+      alert("voullez vous vraiment supprimer l'évenement " + selectedId)
+      this.removeEventStore(selectedId)
+    },
 
     showUpdateEvent: function (selectedId) {
       this.selectedId = selectedId

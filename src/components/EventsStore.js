@@ -97,20 +97,23 @@ const actions = {
   },
   createEvent: ({commit}, requestFields) => {
     // TODO faire une requette create
-    console.log(requestFields)
+    console.log("créer l'évenement " + requestFields)
   },
   updateEvent: ({commit}, requestFields) => {
     // TODO faire une requette update
-    console.log(requestFields)
+    console.log("modifier l'évenement " + requestFields)
   },
-
+  removeEvent:  ({commit}, requestFields) => {
+    // TODO faire une requette delete
+    console.log("supprimer l'évenement " + requestFields)
+  },
   loggedOrCached: ({ dispatch, commit, getters }, fields) => {
     // Je verifie si j'ai un token dans le cache
     // Sinon je fait une nouvelle requette
     return getters.loggedIn ? '' : dispatch('loginUser', {id: fields.id, clientSecret: fields.clientSecret})
   },
 
-  eventCached: (store) => {
+  eventOrCached: (store) => {
     // Je verifie qu'une liste existe dans le cache
     if (!localStorage.event_list) {
       // requette ur l'Api
