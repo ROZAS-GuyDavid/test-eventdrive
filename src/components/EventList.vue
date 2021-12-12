@@ -1,21 +1,28 @@
 <template>
-  <div class="event-list">
-    <h2>Liste d'evenement :</h2>
-    <table v-if="hasEvents">
+  <div class="event-list text-center">
+    <p class="h2">Liste d'evenement :</p>
+    <table class="table table-light table-striped mx-auto" v-if="hasEvents">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Date de début</th>
-                <th>Date de fin</th>
+                <th scope="col">Id</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Date de début</th>
+                <th scope="col">Date de fin</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody v-for="event in eventList" :key ="event.id">
             <tr>
-                <td>{{ event.id }}</td>
+                <th scope="row">{{ event.id }}</th>
                 <td>{{ event.name.en }}</td>
                 <td>{{ event.start_date }}</td>
                 <td>{{ event.end_date }}</td>
+                <td>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                        <button class="btn btn-primary" type="button"><i class="bi bi-pen"></i></button>
+                        <button class="btn btn-primary" type="button"><i class="bi bi-trash"></i></button>
+                    </div>
+                </td>
             </tr>
         </tbody>
     </table>

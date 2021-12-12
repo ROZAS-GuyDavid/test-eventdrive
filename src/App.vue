@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
-    <h1>Eventdrive</h1>
+  <div id="app" class="container">
+    <p class="h2">Eventdrive</p>
     <Events/>
     <EventList/>
   </div>
