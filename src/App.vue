@@ -1,20 +1,35 @@
 <template>
   <div id="app" class="container">
     <p class="h2">Eventdrive</p>
-    <Events/>
-    <EventList/>
+    <div v-if="!loggedIn">
+      <Login/>
+    </div>
+    <div v-else>
+      <EventList/>
+    </div>
   </div>
 </template>
 
 <script>
-import Events from './components/Events'
+import Login from './components/Login'
 import EventList from './components/EventList'
+import store from './components/EventsStore'
+import Vuex from 'vuex'
 
 export default {
+
   name: 'App',
+
+  store: store,
+
   components: {
-    Events,
+    Login,
     EventList
+  },
+
+  computed: {
+    // je récupère mes getters depuis mon EventsStore
+    ...Vuex.mapGetters(['loggedIn'])
   }
 }
 </script>

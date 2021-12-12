@@ -32,11 +32,11 @@ const instance = axios.create({
 })
 
 const actions = {
-  loginUser: (store) => {
+  loginUser: (store, fields) => {
     return new Promise((resolve, reject) => {
       instance.post('/token', {
-        client_id: 25,
-        client_secret: 'my_client_seceret'
+        client_id: fields.id,
+        client_secret: fields.clientSecret
       })
         .then(response => {
           // Je stock mon jeton dans le cache
@@ -56,9 +56,6 @@ const actions = {
   },
 
   async getEvents (store) {
-    // J'attend mon token
-    await store.dispatch('loginUser')
-
     return new Promise((resolve, reject) => {
       instance.get('/events', {
         headers: {
@@ -77,10 +74,10 @@ const actions = {
     })
   },
 
-  loggedInCached: ({ dispatch, commit, getters }, store) => {
+  loggedOrCached: ({ dispatch, commit, getters }, fields) => {
     // Je verifie si j'ai un token dans le cache
     // Sinon je fait une nouvelle requette
-    return getters.loggedIn ? '' : dispatch('loginUser')
+    return getters.loggedIn ? '' : dispatch('loginUser', {id: fields.id, clientSecret: fields.clientSecret})
   },
 
   eventCached: (store) => {
