@@ -6,7 +6,8 @@ const state = {
   // J'initialise mon jeton en verifiant l'existant dans le cache
   accessToken: localStorage.getItem('access_token') ? localStorage.getItem('access_token') : '' || null,
   refreshToken: '' || null,
-  eventList: [] || null
+  eventList: [] || null,
+  showCreateEvent: false
 }
 
 const mutations = {
@@ -24,6 +25,14 @@ const mutations = {
   // Recupérer ma liste d'evenement
   getEvents: (state) => {
     state.eventList = JSON.parse(localStorage.getItem('event_list'))
+  },
+  // Montrer le formulaire d'ajout d'évenement
+  showCreateEvent: (state) => {
+    state.showCreateEvent = true
+  },
+  // Cacher le formulaire d'ajout d'évenement
+  hideCreateEvent: (state) => {
+    state.showCreateEvent = false
   }
 }
 
@@ -73,6 +82,9 @@ const actions = {
         })
     })
   },
+  createEvent: ({commit}, requestFields) => {
+    console.log(requestFields)
+  },
 
   loggedOrCached: ({ dispatch, commit, getters }, fields) => {
     // Je verifie si j'ai un token dans le cache
@@ -112,7 +124,8 @@ const actions = {
 const getters = {
   // Je défini les getters que je vais pouvoir déclancher notament depuis ma vue Events
   loggedIn: state => state.accessToken != null,
-  hasEvents: state => state.eventList != null
+  hasEvents: state => state.eventList != null,
+  createShowed: state => state.showCreateEvent !== false
 }
 
 let store = new Vuex.Store({

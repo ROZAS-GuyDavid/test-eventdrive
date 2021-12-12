@@ -5,6 +5,7 @@
       <Login/>
     </div>
     <div v-else>
+      <CreateEvent/>
       <EventList/>
     </div>
   </div>
@@ -14,6 +15,7 @@
 import Login from './components/Login'
 import EventList from './components/EventList'
 import store from './components/EventsStore'
+import CreateEvent from './components/CreateEvent'
 import Vuex from 'vuex'
 
 export default {
@@ -24,7 +26,8 @@ export default {
 
   components: {
     Login,
-    EventList
+    EventList,
+    CreateEvent
   },
 
   computed: {
