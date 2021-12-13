@@ -1,14 +1,14 @@
 <template>
-    <div class="create-event">
+    <div class="create-event mb-5">
       <div class="row">
         <div class="col-12">
-          <button @click.prevent="showCreateEvent()" class="btn btn-primary mb-2">
+          <button @click.prevent="toggleCreateEvent()" class="btn btn-primary mb-2">
               Créer un évenement&nbsp;&nbsp;
-              <i class="bi bi-calendar-event-fill"></i><i class="bi bi-node-plus-fill"></i>
+              <i class="bi bi-calendar-event-fill"></i>
             </button>
         </div>
       </div>
-      <div class="row" v-if="createShowed">
+      <div v-if="createShowed" @click="toggleCreateEvent()" class="vh-100 position-absolute w-100 bg-opacity-50 bg-dark top-0 start-0 pt-5">
         <div class="card mx-auto col-3 p-3">
           <h5 class="card-title">Créer un évenement</h5>
           <div class="mb-3">
@@ -60,7 +60,7 @@ export default {
   },
 
   methods: {
-    showCreateEvent: function () {
+    toggleCreateEvent: function () {
       if (this.createShowed) {
         store.commit('hideCreateEvent')
       } else {

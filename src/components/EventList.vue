@@ -1,10 +1,10 @@
 <template>
   <div class="event-list text-center">
-    <div class="row" v-if="updateShowed">
+    <div v-if="updateShowed" @click="toggleUpdateEvent(1)" class="vh-100 position-absolute w-100 bg-opacity-50 bg-dark top-0 start-0 pt-5">
       <!-- TODO récupérer ma date de début et de fin et le passer au composant UpdateEvent -->
       <UpdateEvent v-bind:id="selectedId"/>
     </div>
-    <p class="h2">Liste d'evenement :</p>
+    <p class="h2 text-white mb-3">Liste d'evenement :</p>
     <table class="table table-light table-striped mx-auto" v-if="hasEvents">
         <thead>
             <tr>
@@ -23,42 +23,14 @@
                 <td>{{ event.end_date }}</td>
                 <td>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                        <!-- TODO passer la clée à showUpdateEvent -->
-                        <button @click.prevent="showUpdateEvent(1)" class="btn btn-primary" type="button"><i class="bi bi-pen"></i></button>
+                        <!-- TODO passer la clée à toggleUpdateEvent -->
+                        <button @click.prevent="toggleUpdateEvent(1)" class="btn btn-primary" type="button"><i class="bi bi-pen"></i></button>
                         <!-- TODO passer la clée à removeEvent -->
                         <button @click.prevent="removeEvent(1)" class="btn btn-primary" type="button"><i class="bi bi-trash"></i></button>
                     </div>
                 </td>
             </tr>
         </tbody>
-
-        <!-- Mon test   -->
-        <!-- <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Evenement test</td>
-                <td>12/12/2021 00:00:00</td>
-                <td>13/12/2021 00:00:00</td>
-                <td>
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                        <button @click.prevent="showUpdateEvent(1)" class="btn btn-primary" type="button"><i class="bi bi-pen"></i></button>
-                        <button @click.prevent="removeEvent(1)" class="btn btn-primary" type="button"><i class="bi bi-trash"></i></button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Evenement test 2</td>
-                <td>12/12/2021 00:00:00</td>
-                <td>13/12/2021 00:00:00</td>
-                <td>
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                        <button @click.prevent="showUpdateEvent(2)" class="btn btn-primary" type="button"><i class="bi bi-pen"></i></button>
-                        <button @click.prevent="removeEvent(2)" class="btn btn-primary" type="button"><i class="bi bi-trash"></i></button>
-                    </div>
-                </td>
-            </tr>
-        </tbody> -->
     </table>
   </div>
 </template>
@@ -86,7 +58,7 @@ export default {
 
   mounted () {
     // TODO à décomenter ne fois que l'api dev sera à nouveau utilisable
-    // store.dispatch('eventOrCached')
+    store.dispatch('eventOrCached')
   },
 
   computed: {
@@ -111,7 +83,7 @@ export default {
       this.removeEventStore(selectedId)
     },
 
-    showUpdateEvent: function (selectedId) {
+    toggleUpdateEvent: function (selectedId) {
       this.selectedId = selectedId
       if (this.updateShowed) {
         store.commit('hideUpdateEvent')

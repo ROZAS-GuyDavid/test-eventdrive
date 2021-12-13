@@ -1,7 +1,7 @@
 <template>
-    <div class="login mx-auto" style="width: 18rem;">
-      <h5 class="card-title">Connexion</h5>
-      <div class="card">
+    <div class="login mx-auto col-3">
+      <div class="card p-3">
+        <h5 class="card-title">Connexion</h5>
         <div class="mb-3">
             <input type="text" class="form-control" v-model="id" placeholder="id">
         </div>

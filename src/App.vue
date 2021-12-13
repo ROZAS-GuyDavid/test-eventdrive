@@ -1,12 +1,14 @@
 <template>
-  <div id="app" class="container">
-    <p class="h2">Eventdrive</p>
-    <div v-if="!loggedIn">
-      <Login/>
-    </div>
-    <div v-else>
-      <CreateEvent/>
-      <EventList/>
+  <div id="app" class="vh-100">
+    <div class="container">
+      <p class="h2 text-white mb-5">Eventdrive</p>
+      <div v-if="!loggedIn">
+        <Login/>
+      </div>
+      <div v-else>
+        <CreateEvent/>
+        <EventList/>
+      </div>
     </div>
   </div>
 </template>
@@ -44,6 +46,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  padding-top: 60px;
+  background: linear-gradient(#e66465, #9198e5);
 }
 </style>
