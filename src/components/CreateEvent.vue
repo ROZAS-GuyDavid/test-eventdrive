@@ -8,9 +8,12 @@
             </button>
         </div>
       </div>
-      <div v-if="createShowed" @click="toggleCreateEvent()" class="vh-100 position-absolute w-100 bg-opacity-50 bg-dark top-0 start-0 pt-5">
+      <div v-if="createShowed" @click.self="toggleCreateEvent()" class="vh-100 position-absolute w-100 bg-opacity-50 bg-dark top-0 start-0 pt-5">
         <div class="card mx-auto col-3 p-3">
           <h5 class="card-title">Créer un évenement</h5>
+          <div class="mb-3">
+              <input type="text" class="form-control" v-model="mainManagerId" placeholder="manager id">
+          </div>
           <div class="mb-3">
               <input type="text" class="form-control" v-model="name" placeholder="nom">
           </div>
@@ -40,7 +43,8 @@ export default {
     return {
       name: '',
       startDate: '',
-      endDate: ''
+      endDate: '',
+      mainManagerId: 5962
     }
   },
 
@@ -51,7 +55,7 @@ export default {
     ]),
 
     validatedFields: function () {
-      if (this.name !== '' && this.startDate !== '' && this.endDate !== '') {
+      if (this.name !== '' && this.startDate !== '' && this.endDate !== '' && this.mainManagerId !== '') {
         return true
       } else {
         return false
@@ -70,6 +74,7 @@ export default {
 
     createEvent: function () {
       store.dispatch('createEvent', {
+        mainManagerId: this.mainManagerId,
         name: this.name,
         startDate: this.startDate,
         endDate: this.endDate

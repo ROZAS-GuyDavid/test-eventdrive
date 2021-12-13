@@ -5,10 +5,10 @@
           <input type="text" class="form-control" v-model="newName" placeholder="nom">
       </div>
       <div class="mb-3">
-          <input type="date" class="form-control" v-model="startDate" placeholder="date de debut">
+          <input type="date" class="form-control" placeholder="date de debut" disabled>
       </div>
       <div class="mb-3">
-          <input type="date" class="form-control" v-model="endDate" placeholder="date de fin">
+          <input type="date" class="form-control" placeholder="date de fin" disabled>
       </div>
       <button @click="updateEvent()" type="submit" class="btn btn-primary" :class="{'disabled' : !validatedFields}">Submit</button>
     </div>
@@ -27,7 +27,8 @@ export default {
     return {
       newName: '',
       startDate: '',
-      endDate: ''
+      endDate: '',
+      mainManagerId: 5962
     }
   },
 
@@ -35,7 +36,15 @@ export default {
     'id'
   ],
 
+  mounted () {
+    // TODO FIX récupérer name, startDate et endDate depuis mon store
+    this.getEventStoredById(this.id)
+  },
+
   computed: {
+    currentName: function () {
+      return this.event.name.en
+    },
     validatedFields: function () {
       if (this.newName !== '') {
         return true
@@ -46,10 +55,16 @@ export default {
   },
 
   methods: {
+    // TODO FIX récupérer name, startDate et endDate depuis mon store
+    getEventStoredById: function (id) {
+      return store.getters.getEventStoredById(id)
+    },
     updateEvent: function () {
       store.dispatch('updateEvent', {
-        id: 1,
-        newName: this.newName
+        id: this.event.id,
+        name: this.newName,
+        startDate: this.startDate,
+        endDate: this.endDate
       })
     }
   }

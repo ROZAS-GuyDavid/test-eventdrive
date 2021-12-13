@@ -1,6 +1,6 @@
 <template>
   <div class="event-list text-center">
-    <div v-if="updateShowed" @click="toggleUpdateEvent(1)" class="vh-100 position-absolute w-100 bg-opacity-50 bg-dark top-0 start-0 pt-5">
+    <div v-if="updateShowed" @click.self="toggleUpdateEvent()" class="vh-100 position-absolute w-100 bg-opacity-50 bg-dark top-0 start-0 pt-5">
       <!-- TODO récupérer ma date de début et de fin et le passer au composant UpdateEvent -->
       <UpdateEvent v-bind:id="selectedId"/>
     </div>
@@ -23,10 +23,8 @@
                 <td>{{ event.end_date }}</td>
                 <td>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                        <!-- TODO passer la clée à toggleUpdateEvent -->
-                        <button @click.prevent="toggleUpdateEvent(1)" class="btn btn-primary" type="button"><i class="bi bi-pen"></i></button>
-                        <!-- TODO passer la clée à removeEvent -->
-                        <button @click.prevent="removeEvent(1)" class="btn btn-primary" type="button"><i class="bi bi-trash"></i></button>
+                        <button @click.prevent="toggleUpdateEvent(event.id)" class="btn btn-primary" type="button"><i class="bi bi-pen"></i></button>
+                        <button @click.prevent="removeEvent(event.id)" class="btn btn-primary" type="button"><i class="bi bi-trash"></i></button>
                     </div>
                 </td>
             </tr>
@@ -57,7 +55,7 @@ export default {
   },
 
   mounted () {
-    // TODO à décomenter ne fois que l'api dev sera à nouveau utilisable
+    // j'appelle une actions qui va soit chercher dans le cache soit faire une nouvelle requette
     store.dispatch('eventOrCached')
   },
 

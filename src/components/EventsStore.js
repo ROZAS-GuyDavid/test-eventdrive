@@ -95,18 +95,76 @@ const actions = {
         })
     })
   },
-  createEvent: ({commit}, requestFields) => {
+
+  createEvent: (store, requestFields) => {
     // TODO faire une requette create
     console.log("créer l'évenement " + requestFields)
+
+    let data = {
+      main_manager_id: requestFields.mainManagerId,
+      name: {
+        'en': requestFields.name
+      },
+      start_date: requestFields.startDate,
+      end_date: requestFields.endDate,
+      default_locale: 'en',
+      available_locales: ['en']
+    }
+    return new Promise((resolve, reject) => {
+      instance.post('/events', data, {
+        headers: {
+          'Authorization': 'Bearer ' + store.state.accessToken
+        }
+      })
+        .then(response => {
+          // je récuère une nouvelle list d'event
+          store.dispatch('getEvents')
+          console.log('create success')
+        })
+        .catch(error => {
+          // en cas d'erreur je renvoie le message
+          console.log(error)
+          reject(error)
+        })
+    })
   },
   updateEvent: ({commit}, requestFields) => {
     // TODO faire une requette update
     console.log("modifier l'évenement " + requestFields)
+
+    let data = {
+      main_manager_id: requestFields.mainManagerId,
+      name: {
+        'en': requestFields.name
+      },
+      start_date: requestFields.startDate,
+      end_date: requestFields.endDate,
+      default_locale: 'en',
+      available_locales: ['en']
+    }
+    return new Promise((resolve, reject) => {
+      instance.put('/events/' + requestFields.id, data, {
+        headers: {
+          'Authorization': 'Bearer ' + store.state.accessToken
+        }
+      })
+        .then(response => {
+          // je récuère une nouvelle list d'event
+          store.dispatch('getEvents')
+          console.log('update success')
+        })
+        .catch(error => {
+          // en cas d'erreur je renvoie le message
+          console.log(error)
+          reject(error)
+        })
+    })
   },
-  removeEvent:  ({commit}, requestFields) => {
+  removeEvent: ({commit}, requestFields) => {
     // TODO faire une requette delete
     console.log("supprimer l'évenement " + requestFields)
   },
+
   loggedOrCached: ({ dispatch, commit, getters }, fields) => {
     // Je verifie si j'ai un token dans le cache
     // Sinon je fait une nouvelle requette
@@ -147,7 +205,10 @@ const getters = {
   loggedIn: state => state.accessToken != null,
   hasEvents: state => state.eventList != null,
   createShowed: state => state.showCreateEvent !== false,
-  updateShowed: tate => state.showUpdateEvent !== false
+  updateShowed: state => state.showUpdateEvent !== false,
+  getEventStoredById: (state) => (id) => {
+    return state.eventList.items.find(event => event.id === id)
+  }
 }
 
 let store = new Vuex.Store({
