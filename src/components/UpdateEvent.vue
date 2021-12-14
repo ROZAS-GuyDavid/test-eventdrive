@@ -38,13 +38,11 @@ export default {
 
   mounted () {
     // TODO FIX récupérer name, startDate et endDate depuis mon store
-    this.getEventStoredById(this.id)
+    let event = this.getEventStoredById(this.id)
+    this.newName = event.name.en
   },
 
   computed: {
-    currentName: function () {
-      return this.event.name.en
-    },
     validatedFields: function () {
       if (this.newName !== '') {
         return true
@@ -57,7 +55,7 @@ export default {
   methods: {
     // TODO FIX récupérer name, startDate et endDate depuis mon store
     getEventStoredById: function (id) {
-      return store.getters.getEventStoredById(id)
+      return this.$store.getters.getEventStoredById(id)
     },
     updateEvent: function () {
       store.dispatch('updateEvent', {
