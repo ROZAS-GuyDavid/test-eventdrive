@@ -11,6 +11,9 @@
           </div>
           <div v-else>
             <transition appear name="fade4s">
+              <Logout/>
+            </transition>
+            <transition appear name="fade4s">
               <CreateEvent/>
             </transition>
             <EventList/>
@@ -23,6 +26,7 @@
 
 <script>
 import Login from './components/Login'
+import Logout from './components/Logout'
 import EventList from './components/EventList'
 import store from './components/EventsStore'
 import CreateEvent from './components/CreateEvent'
@@ -37,7 +41,8 @@ export default {
   components: {
     Login,
     EventList,
-    CreateEvent
+    CreateEvent,
+    Logout
   },
 
   computed: {

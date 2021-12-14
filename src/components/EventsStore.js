@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 const state = {
   // J'initialise mon jeton en verifiant l'existant dans le cache
   accessToken: localStorage.getItem('access_token') ? localStorage.getItem('access_token') : '' || null,
-  refreshToken: '' || null,
+  refreshToken: localStorage.getItem('refresh_token') ? localStorage.getItem('refresh_token') : '' || null,
   eventList: [],
   showCreateEvent: false,
   showUpdateEvent: false
@@ -22,6 +22,8 @@ const mutations = {
   destroyToken: (state) => {
     state.accessToken = null
     state.refreshToken = null
+    localStorage.removeItem('access_token')
+    localStorage.removeItem('refresh_Token')
   },
 
   // Recupérer ma liste d'evenement
@@ -85,7 +87,11 @@ const actions = {
     })
   },
 
-  getEvents (store) {
+  logout: (store) => {
+    store.commit('destroyToken')
+  },
+
+  getEvents: (store) => {
     // si la requette ne fonctionne pas
     // décommenter le code suivant
 
