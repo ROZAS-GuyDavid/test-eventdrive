@@ -140,8 +140,6 @@ const actions = {
     })
   },
   updateEvent: (store, requestFields) => {
-    console.log("modifier l'évenement " + requestFields)
-
     let data = {
       main_manager_id: requestFields.mainManagerId,
       name: {
@@ -171,9 +169,25 @@ const actions = {
         })
     })
   },
-  removeEvent: ({commit}, requestFields) => {
-    // TODO faire une requette delete
-    console.log("supprimer l'évenement " + requestFields)
+  removeEvent: (store, id) => {
+    if (confirm("voullez vous vraiment supprimer l'évenement ")) {
+      return new Promise((resolve, reject) => {
+        instance.delete('/events/' + id, {
+          headers: {
+            'Authorization': 'Bearer ' + store.state.accessToken
+          }
+        })
+          .then(response => {
+            // je récuère une nouvelle liste d'event
+            store.dispatch('getEvents')
+          })
+          .catch(error => {
+            // en cas d'erreur je renvoie le message
+            console.log(error)
+            reject(error)
+          })
+      })
+    }
   },
 
   loggedOrCached: ({ dispatch, commit, getters }, fields) => {

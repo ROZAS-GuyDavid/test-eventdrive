@@ -10,7 +10,9 @@
             <Login/>
           </div>
           <div v-else>
-            <CreateEvent/>
+            <transition appear name="fade4s">
+              <CreateEvent/>
+            </transition>
             <EventList/>
           </div>
         </div>
@@ -69,11 +71,31 @@ export default {
 .fade2s-enter, .fade2s-leave-active{
   opacity: 0;
 }
+.fade3s-enter-active, .fade4s-leave-active {
+  transition: opacity 4s;
+}
+.fade3s-enter, .fade4s-leave-active{
+  opacity: 0;
+}
 .fade-slidey-enter-active, .fade-slidey-leave-active {
   transition: opacity 1s, transform 1s;
 }
 .fade-slidey-enter, .fade-slidey-leave-active{
   opacity: 0;
   transform: translateY(20px);
+}
+.event-table-item {
+  transition: all 3s;
+}
+.event-table-item > * {
+  transition: all 3s;
+  overflow: hidden;
+}
+.event-table-enter, .event-table-leave-to {
+  line-height: 0;
+}
+.event-table-enter > *, .event-table-leave-to > * {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
 }
 </style>
