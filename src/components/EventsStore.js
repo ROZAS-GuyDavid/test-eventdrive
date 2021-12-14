@@ -80,10 +80,12 @@ const actions = {
   async getEvents (store) {
     return new Promise((resolve, reject) => {
       instance.get('/events', {
+        available_locales: []
+      },
+      {
         headers: {
           'Authorization': 'Bearer ' + store.state.accessToken
-        }
-      })
+        }})
         .then(response => {
           localStorage.setItem('event_list', JSON.stringify(response.data))
           store.commit('getEvents')
@@ -203,7 +205,8 @@ const actions = {
 const getters = {
   // Je défini les getters que je vais pouvoir déclancher notament depuis ma vue Events
   loggedIn: state => state.accessToken != null,
-  hasEvents: state => state.eventList != null,
+  // TODO FIX hasEvent
+  hasEvents: state => state.eventList.length !== 0,
   createShowed: state => state.showCreateEvent !== false,
   updateShowed: state => state.showUpdateEvent !== false,
   getEventStoredById: (state) => (id) => {
