@@ -1,15 +1,21 @@
 <template>
   <div id="app" class="vh-100">
-    <div class="container">
-      <p class="h2 text-white mb-5">Eventdrive</p>
-      <div v-if="!loggedIn">
-        <Login/>
+    <transition appear name="fade">
+      <div class="app-bg h-100 w-100">
+        <div class="container">
+          <transition appear name="fade2s">
+            <p class="h2 text-white mb-5">Eventdrive</p>
+          </transition>
+          <div v-if="!loggedIn">
+            <Login/>
+          </div>
+          <div v-else>
+            <CreateEvent/>
+            <EventList/>
+          </div>
+        </div>
       </div>
-      <div v-else>
-        <CreateEvent/>
-        <EventList/>
-      </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -46,7 +52,28 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+.app-bg {
   padding-top: 60px;
   background: linear-gradient(#e66465, #9198e5);
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 1s;
+}
+.fade-enter, .fade-leave-active{
+  opacity: 0;
+}
+.fade2s-enter-active, .fade2s-leave-active {
+  transition: opacity 2.5s;
+}
+.fade2s-enter, .fade2s-leave-active{
+  opacity: 0;
+}
+.fade-slidey-enter-active, .fade-slidey-leave-active {
+  transition: opacity 1s, transform 1s;
+}
+.fade-slidey-enter, .fade-slidey-leave-active{
+  opacity: 0;
+  transform: translateY(20px);
 }
 </style>
