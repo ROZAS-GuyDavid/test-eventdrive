@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 
 const state = {
   // J'initialise mon jeton en verifiant l'existant dans le cache
-  accessToken: '' || null,
+  accessToken: localStorage.getItem('access_token') ? localStorage.getItem('access_token') : '' || null,
   refreshToken: '' || null,
   eventList: [],
   showCreateEvent: false,
@@ -66,6 +66,10 @@ const actions = {
         client_secret: fields.clientSecret
       })
         .then(response => {
+          // Je stock mon jeton dans le cache
+          localStorage.setItem('access_token', response.data.access_token)
+          localStorage.setItem('refresh_token', response.data.refresh_token)
+
           // J'appelle ma mutation TokenMut qui mettra à jour mon jeton dans le store
           store.commit('TokenMut', {
             access_token: response.data.access_token,
