@@ -1,9 +1,10 @@
 <template>
   <div class="event-list text-center">
-    <div v-if="updateShowed" @click.self="toggleUpdateEvent()" class="vh-100 position-absolute w-100 bg-opacity-50 bg-dark top-0 start-0 pt-5">
-      <!-- TODO récupérer ma date de début et de fin et le passer au composant UpdateEvent -->
-      <UpdateEvent v-bind:id="selectedId"/>
-    </div>
+    <transition appear name="fade">
+      <div v-if="updateShowed" @click.self="toggleUpdateEvent()" class="vh-100 position-absolute w-100 bg-opacity-50 bg-dark top-0 start-0 pt-5">
+        <UpdateEvent v-bind:id="selectedId"/>
+      </div>
+    </transition>
     <p class="h2 text-white mb-3">Liste d'evenement :</p>
     <table class="table table-light table-striped mx-auto" v-if="hasEvents">
         <thead>

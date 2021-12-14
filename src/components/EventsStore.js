@@ -77,15 +77,22 @@ const actions = {
     })
   },
 
-  async getEvents (store) {
+  getEvents (store) {
+    // si la requette ne fonctionne pas
+    // décommenter le code suivant
+
+    // let data = {
+    //   available_locales: []
+    // }
+
     return new Promise((resolve, reject) => {
+      // si la requette ne fonctionne pas
+      // injectez la data    =>     instance.get('/events', data {
       instance.get('/events', {
-        available_locales: []
-      },
-      {
         headers: {
           'Authorization': 'Bearer ' + store.state.accessToken
-        }})
+        }
+      })
         .then(response => {
           localStorage.setItem('event_list', JSON.stringify(response.data))
           store.commit('getEvents')
@@ -112,6 +119,7 @@ const actions = {
       default_locale: 'en',
       available_locales: ['en']
     }
+
     return new Promise((resolve, reject) => {
       instance.post('/events', data, {
         headers: {
@@ -121,7 +129,8 @@ const actions = {
         .then(response => {
           // je récuère une nouvelle list d'event
           store.dispatch('getEvents')
-          console.log('create success')
+          //  je masque le formulaire
+          store.commit('hideCreateEvent')
         })
         .catch(error => {
           // en cas d'erreur je renvoie le message
@@ -130,8 +139,7 @@ const actions = {
         })
     })
   },
-  updateEvent: ({commit}, requestFields) => {
-    // TODO faire une requette update
+  updateEvent: (store, requestFields) => {
     console.log("modifier l'évenement " + requestFields)
 
     let data = {
@@ -151,9 +159,10 @@ const actions = {
         }
       })
         .then(response => {
-          // je récuère une nouvelle list d'event
+          // je récuère une nouvelle liste d'event
           store.dispatch('getEvents')
-          console.log('update success')
+          //  je masque le formulaire
+          store.commit('hideUpdateEvent')
         })
         .catch(error => {
           // en cas d'erreur je renvoie le message
@@ -211,6 +220,10 @@ const getters = {
   updateShowed: state => state.showUpdateEvent !== false,
   getEventStoredById: (state) => (id) => {
     return state.eventList.items.find(event => event.id === id)
+  },
+  formatDate: state => (date) => {
+    let d = new Date(date)
+    return d.toISOString().substring(0, 10)
   }
 }
 
